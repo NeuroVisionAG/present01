@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nano Banana — Полный пример</title>
+  <style>
+    body { margin:0; background:#1a1a2e; color:#fff; font-family:sans-serif; }
+    .presentation { max-width:900px; margin:40px auto; padding:20px; }
+    .slide { display:none; padding-bottom:80px; }
+    .slide.active { display:block; }
+    h1 { color:#00e5ff; text-align:center; margin-bottom:10px; }
+    .description-text { text-align:center; color:#ccc; margin-bottom:20px; line-height:1.4; }
+    .prompts-row { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:20px; }
+    .prompt-btn { padding:10px 20px; border:2px solid #00e5ff; background:transparent; color:#00e5ff; border-radius:6px; cursor:pointer; }
+    .images-row, .three-images-row { display:flex; justify-content:center; gap:20px; flex-wrap:nowrap; overflow-x:auto; margin-bottom:20px; }
+    .image-container { flex:0 0 200px; width:200px; height:200px; overflow:hidden; border:2px solid #00e5ff; border-radius:6px; position:relative; }
+    .image-container img { width:100%; height:100%; object-fit:cover; display:block; }
+    .image-label { position:absolute; bottom:5px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.5); color:#00e5ff; padding:2px 6px; border-radius:4px; font-size:12px; }
+    .prompt-container { display:flex; flex-direction:column; align-items:center; gap:10px; }
+    .navigation { position:fixed; bottom:20px; right:20px; display:flex; gap:10px; }
+    .nav-btn { background:#00e5ff; border:none; color:#1a1a2e; padding:10px 16px; border-radius:20px; cursor:pointer; }
+    .nav-btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .copy-notification { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#00e5ff; color:#1a1a2e; padding:16px; border-radius:8px; opacity:0; transition:opacity .3s; }
+    .copy-notification.show { opacity:1; }
+  </style>
+</head>
+<body>
+  <div class="presentation">
+    <!-- Слайд 1: Титульный -->
+    <section class="slide active" data-slide="1">
+      <h1>50+ способов использования Nano Banana</h1>
+      <p class="description-text">
+        Полный гайд по возможностям AI-модели от Google.<br>
+        Nano Banana — нейросетевая модель изображений, которая заменяет персонажей, предметы и фон,
+        удаляет объекты, дорисовывает сцену и сохраняет атмосферу.
+      </p>
+      <div class="prompts-row">
+        <button class="prompt-btn" data-prompt="Запусти Nano Banana" onclick="copyPrompt(this)">
+          🚀 Запусти Nano Banana
+        </button>
+      </div>
+    </section>
+
+    <!-- Слайд 2: 2 промпта + 2 фото -->
+    <section class="slide" data-slide="2">
+      <h1>1. Удаление объектов и людей</h1>
+      <p class="description-text">
+        Нейросеть уберёт любой объект, точно опиши что это. Сохраняет фон и атмосферу.
+      </p>
+      <div class="prompts-row">
+        <button class="prompt-btn" data-prompt="Удали человека на фото" onclick="copyPrompt(this)">
+          Удали человека на фото
+        </button>
+        <button class="prompt-btn" data-prompt="Убери рекламный стенд с улицы" onclick="copyPrompt(this)">
+          Убери рекламный стенд с улицы
+        </button>
+      </div>
+      <div class="images-row">
+        <div class="image-container">
+          <img src="https://con.xl.ru/igTcae01Ck6805DfdNyAHA/images/thu06BIUqEWOxossj4VJ_g.png" alt="До">
+          <div class="image-label">До</div>
+        </div>
+        <div class="image-container">
+          <img src="https://con.xl.ru/igTcae01Ck6805DfdNyAHA/images/thu06BIUqEWOxossj4VJ_g.png" alt="После">
+          <div class="image-label">После</div>
+        </div>
+      </div>
+      <p class="description-text"><strong>Результат:</strong> Та же картинка, но без нужного объекта.</p>
+    </section>
+
+    <!-- Слайд 3: 1 промпт + 2 фото -->
+    <section class="slide" data-slide="3">
+      <h1>2. Замена предметов и локаций</h1>
+      <p class="description-text">
+        Можно заменить любой предмет на другой, сохранив позу и композицию.
+      </p>
+      <div class="prompts-row">
+        <button class="prompt-btn" data-prompt="Замени телефон на банан" onclick="copyPrompt(this)">
+          Замени телефон на банан
+        </button>
+      </div>
+      <div class="images-row">
+        <div class="image-container">
+          <img src="https://con.xl.ru/igTcae01Ck6805DfdNyAHA/images/thu06BIUqEWOxossj4VJ_g.png" alt="До">
+          <div class="image-label">До</div>
+        </div>
+        <div class="image-container">
+          <img src="https://con.xl.ru/igTcae01Ck6805DfdNyAHA/images/thu06BIUqEWOxossj4VJ_g.png" alt="После">
+          <div class="image-label">После</div>
+        </div>
+      </div>
+      <p class="description-text"><strong>Результат:</strong> Телефон заменён на банан.</p>
+    </section>
+
+    <!-- Слайд 4: 1 промпт + 3 фото -->
+    <section class="slide" data-slide="4">
+      <h1>3. Смешивание изображений</h1>
+      <p class="description-text">Объединяем элементы двух фото в одном результате.</p>
+      <div class="three-images-row">
+        <div class="image-container"><img src="https://con.xl.ru/igTcae01Ck6805DfdNyAHA/images/thu06BIUqEWOxossj4VJ_g.png"><div class="image-label">Фото1</div></div>
+        <div class="image-container"><img src="https://con.xl.ru/igTcae01Ck6805DfdNyAHA/images/thu06BIUqEWOxossj4VJ_g.png"><div class="image-label">Фото2</div></div>
+        <div class="image-container prompt-container">
+          <button class="prompt-btn" data-prompt="Объедини фото 1 и 2" onclick="copyPrompt(this)">
+            Объедини фото 1 и 2
+          </button>
+          <img src="https://con.xl.ru/igTcae01Ck6805DfdNyAHA/images/thu06BIUqEWOxossj4VJ_g.png">
+          <div class="image-label">Результат</div>
+        </div>
+      </div>
+      <p class="description-text"><strong>Результат:</strong> Два фото объединены в одну реалистичную сцену.</p>
+    </section>
+  </div>
+
+  <div class="navigation">
+    <button class="nav-btn" id="prevBtn">← Предыдущий</button>
+    <button class="nav-btn" id="nextBtn">Следующий →</button>
+  </div>
+  <div id="copyNotification" class="copy-notification">Промт скопирован!</div>
+
+  <script>
+    let currentSlide = 1, totalSlides = 4;
+    document.addEventListener('DOMContentLoaded', () => {
+      showSlide();
+      document.getElementById('prevBtn').onclick = () => changeSlide(-1);
+      document.getElementById('nextBtn').onclick = () => changeSlide(1);
+    });
+    function showSlide() {
+      document.querySelectorAll('.slide').forEach((s,i) =>
+        s.classList.toggle('active', i+1 === currentSlide)
+      );
+      document.getElementById('prevBtn').disabled = currentSlide === 1;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+    }
+    function changeSlide(delta) {
+      currentSlide = Math.max(1, Math.min(totalSlides, currentSlide + delta));
+      showSlide();
+    }
+    function copyPrompt(btn) {
+      const text = btn.getAttribute('data-prompt');
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const n = document.getElementById('copyNotification');
+        n.classList.add('show');
+        setTimeout(() => n.classList.remove('show'), 1500);
+      });
+    }
+  </script>
+</body>
+</html>
